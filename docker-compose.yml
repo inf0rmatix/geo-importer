@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: geonames
+      POSTGRES_USER: geo
+      POSTGRES_PASSWORD: geo_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/sql
+    restart: "no"
+
+  importer:
+    build: .
+    depends_on:
+      - db
+    environment:
+      GEONAMES_URL_ALL: "http://download.geonames.org/export/dump/allCountries.zip"
+      GEONAMES_URL_ALT: "http://download.geonames.org/export/dump/alternateNamesV2.zip"
+      PGHOST: db
+      PGUSER: geo
+      PGPASSWORD: geo_pass
+      PGDATABASE: geonames
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./temp:/data
+      - ./sql:/sql
+    restart: "no"
+
+volumes:
+  pgdata:
+  data:
