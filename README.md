@@ -82,7 +82,7 @@ Currently, the workflow automates the download, filtering, and import of GeoName
 
 ## License
 
-[MIT](LICENSE) or your preferred license.
+[MIT](LICENSE)
 
 ## Copyright and Data Source
 
